@@ -27,22 +27,25 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         nameView = findViewById(R.id.editTextName);
-        nameView.setOnClickListener(l -> {
-            nameView.setText("");
+        nameView.setOnFocusChangeListener((l, k) -> {
+            if (k)
+                nameView.setText("");
         });
         ipAddressView = findViewById(R.id.editTextIP);
     }
 
     public void playClick(View v) {
-        String[] ipParts = ipAddressView.getText().toString().split(".");
-        byte[] bytes = new byte[4];
-        for (int i = 0; i < 4; i++) {
-            bytes[i] = Byte.parseByte(ipParts[i]);
-        }
-        try {
-            ipAddress = InetAddress.getByAddress(bytes);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+        String[] ipParts = ipAddressView.getText().toString().split("\\.");
+        if (ipParts.length == 4) {
+            byte[] bytes = new byte[4];
+            for (int i = 0; i < ipParts.length; i++) {
+                bytes[i] = Byte.parseByte(ipParts[i]);
+            }
+            try {
+                ipAddress = InetAddress.getByAddress(bytes);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         }
         if (!nameView.getText().toString().equals(""))
             name = nameView.getText().toString();
