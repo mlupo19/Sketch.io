@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import androidx.annotation.Nullable;
 
 public class CanvasView extends View {
@@ -19,6 +21,22 @@ public class CanvasView extends View {
     private int STROKE_WIDTH = 10;
     private Bitmap bitmap;
     private Canvas canvas;
+
+    private ArrayList<DrawObject> objs = new ArrayList<>();
+
+    enum Shapes {
+        FREE("Free Form"), RECT("Rectangle"), CIRCLE("Circle");
+
+        private String title;
+
+        Shapes(String title) {
+            this.title = title;
+        }
+
+        public String toString() {
+            return title;
+        }
+    };
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
