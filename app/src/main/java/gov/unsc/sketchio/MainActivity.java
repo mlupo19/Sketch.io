@@ -35,17 +35,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playClick(View v) {
-        String[] ipParts = ipAddressView.getText().toString().split("\\.");
-        if (ipParts.length == 4) {
-            byte[] bytes = new byte[4];
-            for (int i = 0; i < ipParts.length; i++) {
-                bytes[i] = Byte.parseByte(ipParts[i]);
-            }
-            try {
-                ipAddress = InetAddress.getByAddress(bytes);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+        try {
+            ipAddress = InetAddress.getByName(ipAddressView.getText().toString());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
         }
         if (!nameView.getText().toString().equals(""))
             name = nameView.getText().toString();
